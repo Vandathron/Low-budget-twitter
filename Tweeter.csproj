@@ -20,6 +20,30 @@
     <Compile Remove="Migrations\20200519182554_added tweetlike, commentLike table.Designer.cs" />
     <Compile Remove="Migrations\20200519183359_added tweetlike,commentlike table.cs" />
     <Compile Remove="Migrations\20200519183359_added tweetlike,commentlike table.Designer.cs" />
+    <Compile Remove="Migrations\20200519184147_comment and like.cs" />
+    <Compile Remove="Migrations\20200519184147_comment and like.Designer.cs" />
+    <Compile Remove="Migrations\20200606154444_cascade shit.cs" />
+    <Compile Remove="Migrations\20200606154444_cascade shit.Designer.cs" />
+    <Compile Remove="Migrations\20200613191245_test.cs" />
+    <Compile Remove="Migrations\20200613191245_test.Designer.cs" />
+    <Compile Remove="Migrations\20200613205045_test.cs" />
+    <Compile Remove="Migrations\20200613205045_test.Designer.cs" />
+    <Compile Remove="Migrations\20200613211344_test.cs" />
+    <Compile Remove="Migrations\20200613211344_test.Designer.cs" />
+    <Compile Remove="Migrations\20200613211724_test.cs" />
+    <Compile Remove="Migrations\20200613211724_test.Designer.cs" />
+    <Compile Remove="Migrations\20200613211830_test2.cs" />
+    <Compile Remove="Migrations\20200613211830_test2.Designer.cs" />
+    <Compile Remove="Migrations\20200613212856_test2.cs" />
+    <Compile Remove="Migrations\20200613212856_test2.Designer.cs" />
+    <Compile Remove="Migrations\20200613213049_test.cs" />
+    <Compile Remove="Migrations\20200613213049_test.Designer.cs" />
+    <Compile Remove="Migrations\20200613231449_test.cs" />
+    <Compile Remove="Migrations\20200613231449_test.Designer.cs" />
+    <Compile Remove="Migrations\20200613231722_test.cs" />
+    <Compile Remove="Migrations\20200613231722_test.Designer.cs" />
+    <Compile Remove="Migrations\20200613232931_test.cs" />
+    <Compile Remove="Migrations\20200613232931_test.Designer.cs" />
   </ItemGroup>
 
 

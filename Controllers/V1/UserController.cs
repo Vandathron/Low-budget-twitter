@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Tweeter.Contract;
 using Tweeter.Contract.V1.Requests;
 using Tweeter.Contract.V1.Responses;
+using Tweeter.Extensions;
 using Tweeter.Services;
 
 namespace Tweeter.Controllers.V1
@@ -60,15 +61,37 @@ namespace Tweeter.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.User.Get)]
-        public async Task<IActionResult> GetAsync([FromBody]  int UserId)
+        public async Task<IActionResult> GetAsync([FromRoute] int userId)
         {
-            return Ok();
+            var response = await _authService.GetUserByIdAsync(userId);
+
+            if(response != null)
+            {
+                return Ok(response);
+            }
+            else
+            {
+                return NotFound();
+            }
         }
 
        [HttpDelete(ApiRoutes.User.Delete)]
         public async Task<IActionResult> DeleteUserAsync([FromBody] int UserId)
         {
             return Ok();
+        }
+
+        [HttpPut(ApiRoutes.User.Update)]
+        public async Task<IActionResult> UpdateUserAsync([FromBody] UserRegistrationRequest request)
+        {
+            int userId = int.Parse(HttpContext.GetUserId());
+            var response = await _authService.UpdateUserAsync(request, userId);
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            else return BadRequest();
         }
 
     }

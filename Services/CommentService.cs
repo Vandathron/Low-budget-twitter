@@ -50,9 +50,11 @@ namespace Tweeter.Services
             };
         }
 
-        public Task<CommentResponse> GetCommentsByTweetIdAsync(int tweetId)
+        public async Task<List<Comment>> GetCommentsByTweetIdAsync(int tweetId)
         {
-            throw new NotImplementedException();
+            List<Comment> commentsByTweet = await _dbContext.Comments.Where(x => x.TweetId == tweetId).ToListAsync();
+
+            return commentsByTweet;
         }
 
         public async Task<CommentResponse> PostCommentAsync(Comment request)
@@ -62,9 +64,17 @@ namespace Tweeter.Services
             if(tweetExist != null)
             {
                 var comment = await _dbContext.Comments.AddAsync(request);
+                await _dbContext.SaveChangesAsync();
                 return new CommentResponse
                 {
-
+                    Comment = new Comment
+                    {
+                        Message = comment.Entity.Message,
+                        TimePosted = comment.Entity.TimePosted,
+                        Id= comment.Entity.Id,
+                        TweetId = comment.Entity.TweetId,
+                        UserId = comment.Entity.UserId
+                    }
                 };
             }
 

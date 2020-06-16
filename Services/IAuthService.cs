@@ -12,5 +12,7 @@ namespace Tweeter.Services
     {
         public Task<AuthenticationResult> RegisterUserAsync(UserRegistrationRequest user);
         public Task<AuthenticationResult> LoginUserAsync(String email, String password);
+        public Task<UserRegistrationResponse> UpdateUserAsync(UserRegistrationRequest user, int userId);
+        public Task<UserRegistrationResponse> GetUserByIdAsync(int userId);
     }
 }

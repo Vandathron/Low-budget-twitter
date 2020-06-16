@@ -27,6 +27,7 @@ namespace Tweeter.Contract
             public const string Delete = Base + "/comment/delete/{commentId}";
             public const string GetByTweetId = Base + "/comment/getByTweetId/{tweetId}";
             public const string GetById = Base + "/comment/GetById/{commentId}";
+
         }
 
         public static class Tweet
@@ -36,6 +37,7 @@ namespace Tweeter.Contract
             public const string GetTweetsByUser = Base + "/tweet/getByUser/{UserId}";
             public const string GetAllTweets = Base + "/tweet/get";
             public const string DeleteTweet = Base + "/tweet/delete/{tweetId}";
+            public const string GetCurrentUserTweet = Base + "/tweet/getCurrentUserTweet";
         }
 
         public static class Like

@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -38,8 +36,20 @@ namespace Tweeter.Controllers.V1
             return NotFound(response);
         }
 
-        [HttpGet(ApiRoutes.Comment.PostComment)]
-        public async Task<IActionResult> PostCommentAsync(CommentRequest comment)
+        [HttpGet(ApiRoutes.Comment.GetByTweetId)]
+        public async Task<IActionResult> GetCommentByTweetIdAsync([FromRoute] int tweetId)
+        {
+            var response = await _commentService.GetCommentsByTweetIdAsync(tweetId);
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            else return NotFound();
+        }
+
+        [HttpPost(ApiRoutes.Comment.PostComment)]
+        public async Task<IActionResult> PostCommentAsync([FromBody] CommentRequest comment)
         {
             var commentToPost = new Comment
             {
@@ -77,5 +87,6 @@ namespace Tweeter.Controllers.V1
             }
 
         }
+
     }
 }

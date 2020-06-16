@@ -17,14 +17,12 @@ namespace Tweeter.Domain
 
         [Timestamp]
         public DateTime TimePosted { get; set; }
-        public int UserId { get; set; }
 
-        [Required]
-        [ForeignKey(nameof(UserId))]
+        public int UserId { get; set; }
         public User User { get; set; }
 
-        public int NoOfLikes { get; set; }
+        public List<Comment> Comments { get; set; }
 
-        public int NoOfComments { get; set; }
+        public List<TweetLike>  TweetLikes { get; set; }
     }
 }

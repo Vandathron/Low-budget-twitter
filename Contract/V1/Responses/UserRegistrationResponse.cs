@@ -11,6 +11,6 @@ namespace Tweeter.Contract.V1.Responses
         public string Email { get; set; }
         public string Password { get; set; }
 
-        public string Id { get; set; }
+        public int Id { get; set; }
     }
 }

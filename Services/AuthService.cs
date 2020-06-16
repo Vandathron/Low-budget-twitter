@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Tweeter.Contract.V1.Requests;
+using Tweeter.Contract.V1.Responses;
 using Tweeter.Data;
 using Tweeter.Domain;
 using Tweeter.Options;
@@ -27,7 +28,7 @@ namespace Tweeter.Services
 
         public async Task<AuthenticationResult> LoginUserAsync(string email, string password)
         {
-            var user = await _dbContext.Users.SingleAsync(predicate: x => x.Email == email && x.Password == password);
+            var user = await _dbContext.User.FirstOrDefaultAsync(predicate: x => x.Email == email && x.Password == password);
 
             if(user != null)
             {
@@ -44,7 +45,7 @@ namespace Tweeter.Services
 
         public async Task<AuthenticationResult> RegisterUserAsync(UserRegistrationRequest user)
         {
-            var existingUser = await _dbContext.Users.SingleAsync(predicate: x => x.UserName == user.Username.Trim() || x.Email == user.Email.Trim());
+            var existingUser = await _dbContext.User.FirstOrDefaultAsync(predicate: x => x.UserName == user.Username.Trim() || x.Email == user.Email.Trim());
 
             if(existingUser == null)
             {
@@ -56,7 +57,8 @@ namespace Tweeter.Services
                     UserName = user.Username,
                 };
 
-                var createdUser = await _dbContext.Users.AddAsync(userToCreate);
+                var createdUser = await _dbContext.User.AddAsync(userToCreate);
+                await _dbContext.SaveChangesAsync();
 
                 return GenerateAuthenticationResultForUser(createdUser.Entity);
 
@@ -77,6 +79,43 @@ namespace Tweeter.Services
                 Success = false,
                 User = null
             };
+        }
+
+        public async Task<UserRegistrationResponse> UpdateUserAsync(UserRegistrationRequest user, int userId)
+        {
+            var userExist = await _dbContext.User.FindAsync(userId);
+
+            if(userExist == null)
+            {
+                return null;
+            }
+            else 
+            {
+                userExist.Bio = user.Bio;
+                await _dbContext.SaveChangesAsync();
+                return new UserRegistrationResponse { Username = userExist.UserName };
+              
+            }
+        }
+
+        public async Task<UserRegistrationResponse> GetUserByIdAsync(int id)
+        {
+            var userExist = await _dbContext.User.FindAsync(id);
+
+            if(userExist != null)
+            {
+                return new UserRegistrationResponse
+                {
+                    Email = userExist.Email,
+                    Id = userExist.Id,
+                    Username = userExist.UserName,
+                };
+            }
+
+            else
+            {
+                return null;
+            }
         }
 
         private AuthenticationResult GenerateAuthenticationResultForUser(User user)

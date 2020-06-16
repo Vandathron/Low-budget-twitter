@@ -56,9 +56,15 @@ namespace Tweeter.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.Tweet.GetTweetsByUser)]
-        public async Task<IActionResult> GetTweetByUserIdAsync(int UserId)
+        public async Task<IActionResult> GetTweetByUserIdAsync(int userId)
         {
-            return Ok();
+            var response = await _tweetService.GetTweetsByUserIdAsync(userId);
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+            else return NotFound();
         }
 
 
@@ -85,6 +91,20 @@ namespace Tweeter.Controllers.V1
                     ErrorMessage = "No permission to delete this tweet"
                 });
             }
+        }
+
+        [HttpGet(ApiRoutes.Tweet.GetCurrentUserTweet)]
+        public async Task<IActionResult> GetCurrentUserTweet()
+        {
+            var response = await _tweetService.GetCurrentUserTweets(int.Parse(HttpContext.GetUserId()));
+
+            if (response != null)
+            {
+                return Ok(response);
+            }
+
+            else return NotFound();
+
         }
     }
 }

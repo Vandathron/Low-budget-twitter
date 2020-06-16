@@ -13,7 +13,7 @@ namespace Tweeter.Services
         public Task<CommentResponse> PostCommentAsync(Comment request);
         public Task<CommentResponse> DeleteCommentAsync(int commentId);
         public Task<CommentResponse> GetCommentByIdAsync(int commentId);
-        public Task<CommentResponse> GetCommentsByTweetIdAsync(int tweetId);
+        public Task<List<Comment>> GetCommentsByTweetIdAsync(int tweetId);
         public Task<bool> UserOwnsCommentAsync(int tweetId, int userId);
     }
 }

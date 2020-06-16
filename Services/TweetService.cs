@@ -46,9 +46,11 @@ namespace Tweeter.Services
             return TweetToTweetResponse(tweet);
         }
 
-        public Task<TweetResponse> GetTweetsByUserIdAsync(int userId)
+        public async Task<List<Tweet>> GetTweetsByUserIdAsync(int userId)
         {
-            throw new NotImplementedException();
+            List<Tweet> tweetsByUser = await _dbContext.Tweets.Where(x => x.UserId == userId).ToListAsync();
+
+            return tweetsByUser;
         }
 
         public async Task<TweetResponse> PostTweetAsync(Tweet tweet)
@@ -80,6 +82,13 @@ namespace Tweeter.Services
                 TweetMessage = tweet.Message,
                 TimePosted = tweet.TimePosted
             };
+        }
+
+        public async Task<List<Tweet>> GetCurrentUserTweets(int userId)
+        {
+            List<Tweet> tweets = await _dbContext.Tweets.Where(x => x.UserId == userId).ToListAsync();
+
+            return tweets;
         }
     }
 }
