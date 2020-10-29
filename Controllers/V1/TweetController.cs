@@ -56,7 +56,7 @@ namespace Tweeter.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.Tweet.GetTweetsByUser)]
-        public async Task<IActionResult> GetTweetByUserIdAsync(int userId)
+        public async Task<IActionResult> GetTweetByUserIdAsync([FromRoute]int userId)
         {
             var response = await _tweetService.GetTweetsByUserIdAsync(userId);
 
@@ -81,7 +81,6 @@ namespace Tweeter.Controllers.V1
                     {
                         status = true,
                     });
-                
             }
             else
             {

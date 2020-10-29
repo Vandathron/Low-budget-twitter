@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Tweeter.Contract;
 using Tweeter.Data;
+using Tweeter.Extensions;
+using Tweeter.Services;
 
 namespace Tweeter.Controllers.V1
 {
@@ -13,22 +15,24 @@ namespace Tweeter.Controllers.V1
     [ApiController]
     public class LikeController : ControllerBase
     {
-        private ApplicationDbContext _dbContext;
-        public LikeController(ApplicationDbContext dbContext)
+        private readonly ILikeService _likeService;
+        public LikeController(ILikeService likeService)
         {
-            _dbContext = dbContext;
+            _likeService = likeService;
         }
 
         [HttpPost(ApiRoutes.Like.LikeTweet)]
         public async Task<IActionResult> LikeTweetAsync(int tweetId)
         {
-            throw new NotImplementedException();
+            var response = await _likeService.LikeComment(tweetId, int.Parse(HttpContext.GetUserId()));
+            if (response.StatusCode == 200) return Ok(response.Status); return NotFound();
         }
 
         [HttpPost(ApiRoutes.Like.LikeComment)]
         public async Task<IActionResult> LikeCommentAsync(int commentId)
         {
-            throw new NotImplementedException();
+            var response = await _likeService.LikeComment(commentId, int.Parse(HttpContext.GetUserId()));
+            if (response.StatusCode == 200) return Ok(response.Status);  return NotFound();
         }
 
     }

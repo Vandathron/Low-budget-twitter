@@ -17,7 +17,7 @@ namespace Tweeter.Contract
             public const string Delete = Base + "/user/delete";
             public const string Login = Base + "/user/login";
             public const string Update = Base + "/user/update";
-            public const string Get = Base + "/user/get";
+            public const string Get = Base + "/user/get/{UserId}";
             public const string GetAll = Base + "/user/get";
         }
 
@@ -34,7 +34,7 @@ namespace Tweeter.Contract
         {
             public const string PostTweet = Base + "/tweet/post";
             public const string GetTweet = Base + "/tweet/get/{tweetId}";
-            public const string GetTweetsByUser = Base + "/tweet/getByUser/{UserId}";
+            public const string GetTweetsByUser = Base + "/tweet/getByUser/{userId}";
             public const string GetAllTweets = Base + "/tweet/get";
             public const string DeleteTweet = Base + "/tweet/delete/{tweetId}";
             public const string GetCurrentUserTweet = Base + "/tweet/getCurrentUserTweet";

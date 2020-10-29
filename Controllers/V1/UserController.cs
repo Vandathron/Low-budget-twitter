@@ -61,9 +61,9 @@ namespace Tweeter.Controllers.V1
         }
 
         [HttpGet(ApiRoutes.User.Get)]
-        public async Task<IActionResult> GetAsync([FromRoute] int userId)
+        public async Task<IActionResult> GetAsync([FromRoute] int UserId)
         {
-            var response = await _authService.GetUserByIdAsync(userId);
+            var response = await _authService.GetUserByIdAsync(UserId);
 
             if(response != null)
             {

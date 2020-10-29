@@ -5,24 +5,83 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Tweeter.Contract.V1.Responses;
 using Tweeter.Data;
+using Tweeter.Domain;
 
 namespace Tweeter.Services
 {
     public class LikeService : ILikeService
     {
-       //private ApplicationDbContext _dbContext;
-        public LikeService()
+        private readonly ApplicationDbContext _dbContext;
+        public LikeService(ApplicationDbContext dbContext)
         {
-           // _dbContext = dbContext;
+            _dbContext = dbContext;
         }
-        public Task<LikeResponse> LikeComment(int commentId)
+        public async Task<LikeResponse> LikeComment(int commentId, int userId)
         {
-            throw new NotImplementedException();
+            var comment = await _dbContext.Comments.FindAsync(commentId);
+
+            if (comment != null)
+            {
+                var like = await _dbContext.CommentLikes.SingleOrDefaultAsync(x => x.CommentId == commentId && x.UserId == userId);
+                if (like != null)
+                {
+                    _dbContext.CommentLikes.Remove(like);
+                    return new LikeResponse
+                    {
+                        Status = true,
+                        StatusCode = 200
+                    };
+                }
+                else
+                {
+                    var likeToAdd = new CommentLike { CommentId = commentId, UserId = userId, TimeLiked = DateTime.UtcNow };
+                    await _dbContext.CommentLikes.AddAsync(likeToAdd);
+                    await _dbContext.SaveChangesAsync();
+                    return new LikeResponse
+                    {
+                        Status = true,
+                        StatusCode = 200
+                    };
+                }
+            }
+            else return new LikeResponse
+            {
+                StatusCode = 404
+            };
         }
 
-        public Task<LikeResponse> LikeTweet(int tweetID)
+        public async Task<LikeResponse> LikeTweet(int tweetID, int userId)
         {
-            throw new NotImplementedException();
+            var tweet = await _dbContext.Tweets.FindAsync(tweetID);
+
+            if (tweet != null)
+            {
+                var like = await _dbContext.TweetLikes.SingleOrDefaultAsync(x => x.TweetId == tweet.Id && x.UserId == userId);
+                if (like != null)
+                {
+                    _dbContext.TweetLikes.Remove(like);
+                    return new LikeResponse
+                    {
+                        Status = true,
+                        StatusCode = 200
+                    };
+                }
+                else
+                {
+                    var likeToAdd = new TweetLike{ TweetId = tweetID, UserId = userId, TimeLiked = DateTime.UtcNow };
+                    await _dbContext.TweetLikes.AddAsync(likeToAdd);
+                    await _dbContext.SaveChangesAsync();
+                    return new LikeResponse
+                    {
+                        Status = true,
+                        StatusCode = 200
+                    };
+                }
+            }
+            else return new LikeResponse
+            {
+                StatusCode = 404
+            };
         }
     }
 }

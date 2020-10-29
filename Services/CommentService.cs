@@ -45,6 +45,7 @@ namespace Tweeter.Services
 
             return new CommentResponse
             {
+                Comment = new Comment { Message = commentExit.Message, TimePosted = commentExit.TimePosted},
                 StatusCode = 200,
                 ErrorMessage = null
             };
@@ -67,6 +68,7 @@ namespace Tweeter.Services
                 await _dbContext.SaveChangesAsync();
                 return new CommentResponse
                 {
+                    StatusCode = 200,
                     Comment = new Comment
                     {
                         Message = comment.Entity.Message,

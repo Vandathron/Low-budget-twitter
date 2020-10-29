@@ -42,6 +42,7 @@ namespace Tweeter
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITweetService, TweetService>();
             services.AddScoped<ICommentService, CommentService>();
+            services.AddScoped<ILikeService, LikeService>();
             var jwtSettings = new JwtSettings();
             Configuration.Bind(key: nameof(jwtSettings), jwtSettings);
             services.AddSingleton(jwtSettings);

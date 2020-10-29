@@ -8,7 +8,7 @@ namespace Tweeter.Services
 {
     public interface ILikeService
     {
-        public Task<LikeResponse> LikeTweet(int tweetID);
-        public Task<LikeResponse> LikeComment(int commentId);
+        public Task<LikeResponse> LikeTweet(int tweetID, int userId);
+        public Task<LikeResponse> LikeComment(int commentId, int userId);
     }
 }
